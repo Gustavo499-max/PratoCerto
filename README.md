@@ -1,163 +1,351 @@
-# PratoCerto API
+# 🍽️ PratoCerto
 
-API de restaurantes com persistência em PostgreSQL (via Prisma), arquitetura
-em camadas e autenticação JWT. Inclui uma interface HTML simples para
-consultar e cadastrar restaurantes.
+> **API de restaurantes com autenticação, persistência de dados e arquitetura em camadas.**
 
-## Stack
-- Node.js + Express
-- PostgreSQL + Prisma ORM
-- JWT (`jsonwebtoken`) + hash de senha (`bcryptjs`)
-- HTML + CSS + JS puro para a interface (`public/`)
+O **PratoCerto** é uma aplicação desenvolvida para gerenciamento de restaurantes, permitindo consultar estabelecimentos, cadastrar novos restaurantes e realizar autenticação de usuários.
 
-## Estrutura do projeto
+O projeto utiliza **Node.js, Express, PostgreSQL, Prisma ORM e JWT**, além de possuir uma interface web desenvolvida com **HTML, CSS e JavaScript**.
+
+---
+
+## 🌐 Acesse a aplicação
+
+### 🚀 Aplicação online
+
+👉  https://gustavo499-max.github.io/PratoCerto/
+
+
+
+### 💻 Executar localmente
+
+Depois de iniciar o servidor, a aplicação estará disponível em:
+
+**http://localhost:3000**
+
+---
+
+
+## 📋 Sobre o projeto
+
+O PratoCerto foi desenvolvido aplicando conceitos de **Software Architecture & Design Patterns**.
+
+A aplicação evoluiu de um armazenamento simples em memória para uma solução com persistência utilizando **PostgreSQL e Prisma ORM**.
+
+Também foi implementada uma arquitetura organizada em camadas e autenticação baseada em **JWT (JSON Web Token)**.
+
+### Principais funcionalidades
+
+- 🍴 Listagem de restaurantes
+- ➕ Cadastro de restaurantes
+- 👤 Cadastro de usuários
+- 🔐 Login de usuários
+- 🎫 Autenticação utilizando JWT
+- 🔒 Proteção de rotas
+- 🗄️ Persistência com PostgreSQL
+- 🔄 Prisma ORM
+- 🧱 Arquitetura em camadas
+- 🌐 Interface web em HTML, CSS e JavaScript
+- 📑 Registro das decisões arquiteturais através de ADRs
+- ❤️ Endpoint de verificação da API
+
+---
+
+# 🛠️ Tecnologias utilizadas
+
+| Tecnologia | Utilização |
+|---|---|
+| Node.js | Ambiente de execução JavaScript |
+| Express | Desenvolvimento da API REST |
+| PostgreSQL | Banco de dados relacional |
+| Prisma ORM | Comunicação entre aplicação e banco |
+| JWT | Autenticação dos usuários |
+| bcryptjs | Hash e validação das senhas |
+| HTML5 | Estrutura da interface |
+| CSS3 | Estilização |
+| JavaScript | Interatividade da interface |
+| Git | Controle de versão |
+| GitHub | Hospedagem e versionamento do projeto |
+
+---
+
+
+### Responsabilidades
+
+**Routes**  
+Define os endpoints disponíveis na API.
+
+**Controller**  
+Recebe as requisições HTTP e devolve as respostas.
+
+**Service**  
+Contém as regras de negócio e operações da aplicação.
+
+**Database**  
+Gerencia a conexão com o Prisma.
+
+**PostgreSQL**  
+Responsável pela persistência dos dados.
+
+
+
+# 🔐 Autenticação
+
+A autenticação do PratoCerto utiliza **JWT (JSON Web Token)**.
+
+O fluxo funciona da seguinte maneira:
+
+```text
+Cadastro
+   ↓
+Senha protegida com bcrypt
+   ↓
+Login
+   ↓
+Validação das credenciais
+   ↓
+Geração do JWT
+   ↓
+Token enviado ao usuário
+   ↓
+Acesso às rotas protegidas
 ```
-pratocerto/
-├── docs/
-│   └── adr/                      # Architecture Decision Records
-├── prisma/
-│   ├── schema.prisma
-│   └── seed.js
-├── public/                       # Interface HTML
-│   ├── index.html
-│   ├── style.css
-│   └── script.js
-├── src/
-│   ├── app.js                    # configura a aplicação Express
-│   ├── database/
-│   │   └── prisma.js             # conexão única com o Prisma
-│   └── modules/
-│       ├── restaurants/
-│       │   ├── restaurant.routes.js
-│       │   ├── restaurant.controller.js
-│       │   └── restaurant.service.js
-│       └── auth/
-│           ├── auth.routes.js
-│           ├── auth.controller.js
-│           ├── auth.service.js
-│           └── auth.middleware.js
-├── server.js                     # liga o servidor
-├── package.json
-├── .env.example
-└── .gitignore
+
+Para acessar uma rota protegida, deve ser enviado:
+
+```http
+Authorization: Bearer SEU_TOKEN_AQUI
 ```
 
-## Como rodar
+O `GET /restaurants` permanece público.
 
-### 1. Pré-requisitos
-- Node.js 18+
-- PostgreSQL instalado e rodando localmente (ou em algum serviço na nuvem)
+O `POST /restaurants` exige autenticação.
 
-### 2. Instale as dependências
+---
+
+# 🔗 Rotas da API
+
+| Método | Endpoint | Autenticação | Descrição |
+|---|---|:---:|---|
+| `GET` | `/restaurants` | ❌ | Lista os restaurantes |
+| `POST` | `/restaurants` | 🔒 | Cadastra um restaurante |
+| `POST` | `/auth/register` | ❌ | Cadastra um usuário |
+| `POST` | `/auth/login` | ❌ | Realiza login |
+| `GET` | `/auth/me` | 🔒 | Retorna usuário autenticado |
+| `GET` | `/health` | ❌ | Verifica o status da API |
+
+---
+
+
+
+
+# 🚀 Como executar o projeto
+
+## 1. Pré-requisitos
+
+Antes de começar, tenha instalado:
+
+- Node.js 18 ou superior
+- PostgreSQL
+- Git
+- VS Code ou outro editor
+
+---
+
+## 2. Clone o repositório
+
+```bash
+git clone COLE_AQUI_A_URL_DO_REPOSITORIO
+```
+
+Entre na pasta:
+
+```bash
+cd pratocerto
+```
+
+---
+
+## 3. Instale as dependências
+
 ```bash
 npm install
 ```
 
-### 3. Crie o banco de dados
-Abra o `psql` (ou outro cliente PostgreSQL) e crie o banco:
+---
+
+## 4. Crie o banco
+
+No PostgreSQL:
+
 ```sql
 CREATE DATABASE pratocerto;
 ```
 
-### 4. Configure as variáveis de ambiente
-O projeto já vem com um arquivo `.env` de exemplo. Edite-o com sua senha real
-do PostgreSQL:
-```
-DATABASE_URL="postgresql://postgres:SUA_SENHA_AQUI@localhost:5432/pratocerto"
-JWT_SECRET="troque-por-uma-chave-longa-e-aleatoria"
+---
+
+## 5. Configure as variáveis de ambiente
+
+Crie um arquivo `.env` baseado no `.env.example`.
+
+```env
+DATABASE_URL="postgresql://postgres:SUA_SENHA@localhost:5432/pratocerto"
+JWT_SECRET="SUA_CHAVE_SECRETA"
 PORT=3000
 ```
 
-### 5. Gere o Prisma Client e rode a migration
+> ⚠️ O arquivo `.env` não deve ser enviado para o GitHub.
+
+---
+
+## 6. Configure o Prisma
+
+Execute:
+
 ```bash
 npx prisma generate
+```
+
+Depois:
+
+```bash
 npx prisma migrate dev --name init
 ```
-Isso cria as tabelas `restaurants` e `users` no banco.
 
-### 6. (Opcional) Popule o banco com dados iniciais
+---
+
+## 7. Popule o banco (opcional)
+
 ```bash
 npm run prisma:seed
 ```
 
-### 7. Suba o servidor
+---
+
+## 8. Inicie a aplicação
+
 ```bash
 npm start
 ```
-Você deve ver:
-```
+
+Resultado esperado:
+
+```text
 PratoCerto rodando na porta 3000
 ```
 
-### 8. Abra a interface
-Acesse **http://localhost:3000** no navegador. Você pode:
-- ver a lista de restaurantes (rota pública);
-- criar uma conta e entrar;
-- cadastrar um novo restaurante (exige estar logado).
+Agora abra:
 
-## Rotas da API
+**http://localhost:3000**
 
-| Método | Rota               | Protegida? | Descrição                          |
-|--------|--------------------|:----------:|-------------------------------------|
-| GET    | `/restaurants`     | Não        | Lista todos os restaurantes         |
-| POST   | `/restaurants`     | Sim        | Cadastra um novo restaurante        |
-| POST   | `/auth/register`   | Não        | Cria uma nova conta de usuário      |
-| POST   | `/auth/login`      | Não        | Autentica e devolve um token JWT    |
-| GET    | `/auth/me`         | Sim        | Retorna o usuário autenticado       |
-| GET    | `/health`          | Não        | Verifica se a API está no ar        |
+---
 
-Para rotas protegidas, envie o header:
-```
-Authorization: Bearer SEU_TOKEN_AQUI
-```
+# 🧪 Testando a API
 
-### Exemplo de teste com curl
+### Cadastrar usuário
 
 ```bash
-# Cadastrar usuário
 curl -X POST http://localhost:3000/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Aluno","email":"aluno@pratocerto.com","password":"123456"}'
+-H "Content-Type: application/json" \
+-d '{"name":"Aluno","email":"aluno@pratocerto.com","password":"123456"}'
+```
 
-# Login (copie o "token" da resposta)
+### Fazer login
+
+```bash
 curl -X POST http://localhost:3000/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"aluno@pratocerto.com","password":"123456"}'
+-H "Content-Type: application/json" \
+-d '{"email":"aluno@pratocerto.com","password":"123456"}'
+```
 
-# Cadastrar restaurante (rota protegida)
+A API retornará um **token JWT**.
+
+### Cadastrar restaurante
+
+```bash
 curl -X POST http://localhost:3000/restaurants \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer SEU_TOKEN_AQUI" \
-  -d '{"name":"Cantina da Nona","category":"Italiana","rating":4.7}'
+-H "Content-Type: application/json" \
+-H "Authorization: Bearer SEU_TOKEN_AQUI" \
+-d '{"name":"Cantina da Nona","category":"Italiana","rating":4.7}'
+```
 
-# Listar restaurantes (rota pública)
+### Listar restaurantes
+
+```bash
 curl http://localhost:3000/restaurants
 ```
 
-## Ferramentas úteis do Prisma
-```bash
-npx prisma studio    # interface visual para ver/editar os dados
-npx prisma migrate dev --name nome-da-mudanca   # nova migration
+---
+
+# 📑 Architecture Decision Records
+
+As principais decisões arquiteturais do projeto estão documentadas em:
+
+```text
+docs/adr/
 ```
 
-## Decisões de arquitetura (ADRs)
-Todas as decisões arquiteturais importantes estão documentadas em
-`docs/adr/`:
+### ADR-001 — Armazenamento em memória
 
-- **ADR-001** — Armazenar restaurantes em memória (decisão inicial, hoje
-  superada)
-- **ADR-002** — Persistência com PostgreSQL e Prisma
-- **ADR-003** — Arquitetura em camadas
-- **ADR-004** — Autenticação com JWT
+Primeira estratégia utilizada durante a prototipação da aplicação.
 
-## Publicando no GitHub
-```bash
-git init
-git add .
-git commit -m "PratoCerto: API com Prisma, arquitetura em camadas e JWT"
-git branch -M main
-git remote add origin <URL_DO_SEU_REPOSITORIO>
-git push -u origin main
+### ADR-002 — PostgreSQL + Prisma
+
+Substituição do armazenamento temporário por persistência em banco de dados.
+
+### ADR-003 — Arquitetura em camadas
+
+Separação das responsabilidades entre:
+
+```text
+Routes → Controller → Service → Database
 ```
-O arquivo `.env` já está no `.gitignore` e não será enviado ao GitHub —
-apenas o `.env.example` (sem segredos reais) é versionado.
+
+### ADR-004 — Autenticação JWT
+
+Implementação de cadastro, login, proteção de senha e autenticação através de tokens JWT.
+
+---
+
+# 🔒 Segurança
+
+O projeto implementa alguns cuidados importantes:
+
+- Senhas protegidas com `bcryptjs`
+- Autenticação através de JWT
+- Rotas privadas protegidas por middleware
+- Segredos armazenados em variáveis de ambiente
+- `.env` ignorado pelo Git
+- Credenciais não armazenadas diretamente no código
+
+---
+
+# 🧰 Prisma Studio
+
+Para visualizar os dados do banco através de uma interface gráfica:
+
+```bash
+npx prisma studio
+```
+
+O Prisma Studio permitirá visualizar e gerenciar os registros de usuários e restaurantes.
+
+---
+
+# 📌 Status do projeto
+
+**🟢 Funcional**
+
+- [x] Interface HTML
+- [x] API REST
+- [x] PostgreSQL
+- [x] Prisma ORM
+- [x] Arquitetura em camadas
+- [x] Cadastro de usuários
+- [x] Login
+- [x] JWT
+- [x] Hash de senhas
+- [x] Proteção de rotas
+- [x] ADRs
+- [x] Git/GitHub
+
+---
