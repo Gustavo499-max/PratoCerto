@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PratoCerto — restaurantes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">●</span>
+    <span class="brand-name">PratoCerto</span>
+  </div>
+  <nav class="session" id="sessionArea">
+    <button class="link-btn" id="btnShowLogin">Entrar</button>
+    <button class="link-btn" id="btnShowRegister">Criar conta</button>
+  </nav>
+</header>
+
+<main>
+
+  <section class="hero">
+    <h1>Encontre e cadastre os restaurantes<br />da sua cidade.</h1>
+    <p class="hero-sub">Consulta é livre para todo mundo. Cadastrar um novo restaurante exige uma conta — é rápido.</p>
+  </section>
+
+  <section class="panel" id="authPanel" hidden>
+    <div class="panel-head">
+      <h2 id="authTitle">Entrar</h2>
+      <button class="icon-btn" id="btnCloseAuth" aria-label="Fechar">×</button>
+    </div>
+
+    <form id="loginForm" class="stack">
+      <label>E-mail
+        <input type="email" name="email" required autocomplete="email" />
+      </label>
+      <label>Senha
+        <input type="password" name="password" required autocomplete="current-password" />
+      </label>
+      <button type="submit" class="primary-btn">Entrar</button>
+      <p class="form-msg" id="loginMsg"></p>
+    </form>
+
+    <form id="registerForm" class="stack" hidden>
+      <label>Nome
+        <input type="text" name="name" required autocomplete="name" />
+      </label>
+      <label>E-mail
+        <input type="email" name="email" required autocomplete="email" />
+      </label>
+      <label>Senha
+        <input type="password" name="password" required minlength="6" autocomplete="new-password" />
+      </label>
+      <button type="submit" class="primary-btn">Criar conta</button>
+      <p class="form-msg" id="registerMsg"></p>
+    </form>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>Cadastrar restaurante</h2>
+    </div>
+    <p class="hint" id="createHint">Entre na sua conta para cadastrar um restaurante.</p>
+    <form id="restaurantForm" class="row-form">
+      <label>Nome
+        <input type="text" name="name" required placeholder="Ex: Cantina da Nona" />
+      </label>
+      <label>Categoria
+        <input type="text" name="category" required placeholder="Ex: Italiana" />
+      </label>
+      <label>Nota
+        <input type="number" name="rating" min="0" max="5" step="0.1" placeholder="4.5" />
+      </label>
+      <button type="submit" class="primary-btn" id="btnCreateRestaurant" disabled>Cadastrar</button>
+    </form>
+    <p class="form-msg" id="restaurantMsg"></p>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2>Restaurantes cadastrados</h2>
+      <button class="icon-btn" id="btnRefresh" aria-label="Atualizar lista" title="Atualizar">↻</button>
+    </div>
+    <div id="restaurantList" class="restaurant-grid">
+      <p class="hint">Carregando restaurantes…</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>PratoCerto API · projeto de estudo de arquitetura em camadas, Prisma/PostgreSQL e JWT.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
